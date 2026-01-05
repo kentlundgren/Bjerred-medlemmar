@@ -317,6 +317,31 @@ Desktop.ini
 <span class="comment"># Om du är på "master", byt till "main"</span>
 <span class="command">git branch -M main</span>
         </div>
+        
+        <div class="info">
+            <strong>📖 Master vs Main - Historik och förklaring:</strong><br><br>
+            
+            <strong>Historiskt (före 2020):</strong><br>
+            Git använde "master" som standardnamn för huvudbranchen när man körde <code>git init</code>.<br><br>
+            
+            <strong>Nu (efter 2020):</strong><br>
+            På grund av inkluderingsskäl har branschen gått över till att använda "main" istället för "master".
+            <ul>
+                <li><strong>GitHub:</strong> Använder "main" som standard för nya repositories sedan oktober 2020</li>
+                <li><strong>Git (lokal):</strong> Vissa versioner skapar fortfarande "master" som standard</li>
+                <li><strong>GitLab, Bitbucket:</strong> Använder också "main" numera</li>
+            </ul>
+            
+            <strong>Vad ska du göra?</strong><br>
+            För att undvika förvirring, använd alltid "main" för nya projekt. Om Git skapar "master", byt till "main" med kommandot ovan.
+            
+            <br><br>
+            <strong>Ändra Git's standardbranch-namn permanent:</strong>
+            <div class="code-block">
+<span class="comment"># Gör så att Git alltid skapar "main" istället för "master"</span>
+<span class="command">git config --global init.defaultBranch main</span>
+            </div>
+        </div>
     </div>
 
     <div class="step">
@@ -486,6 +511,58 @@ case-insensitive och söker i realtid."</span>
             <li>Ta bort markeringarna</li>
             <li>Kör: <code>git add .</code> och <code>git commit</code></li>
         </ol>
+        
+        <h3>Problem: Ser filer från andra projekt i Cursor/IDE</h3>
+        <p><strong>Orsak:</strong> Det finns ett Git-repository i en överliggande (parent) mapp som inkluderar flera projekt.</p>
+        
+        <div class="warning">
+            <strong>⚠️ Viktigt att förstå: Nested Git Repositories</strong><br><br>
+            
+            Om du har följande struktur:
+            <pre style="background-color: rgba(0,0,0,0.1); padding: 10px; border-radius: 5px;">
+D:/
+└── kentlundgren_se/           ← Git repo här
+    ├── .git/
+    ├── program/
+    │   ├── projekt1/
+    │   ├── projekt2/
+    │   └── Bjerred/
+    │       └── medlemmar/      ← Vill ha separat Git repo här
+    │           └── .git/
+            </pre>
+            
+            Då kan det bli förvirrande! Det överliggande repositoryt (kentlundgren_se) kan "se" alla ändringar i alla undermappar.
+        </div>
+        
+        <p><strong>Lösningar:</strong></p>
+        
+        <h4>Lösning 1: Öppna bara projektmappen i din IDE (Rekommenderas!) ✅</h4>
+        <ol>
+            <li>I Cursor/VS Code: <strong>File → Open Folder</strong> (eller <code>Ctrl+K Ctrl+O</code>)</li>
+            <li>Välj BARA medlemmar-mappen:<br>
+                <code>D:\VåraFiler_primära_på_SSD\Kent_dokument\Data\HTML\kentlundgren_se\program\Bjerred\medlemmar</code>
+            </li>
+            <li>Nu kommer Cursor bara fokusera på detta projekt och dess Git-repository</li>
+        </ol>
+        
+        <h4>Lösning 2: Lägg till i .gitignore i överliggande repo</h4>
+        <p>Om det överliggande repositoryt ska fortsätta existera, lägg till medlemmar-mappen i dess .gitignore:</p>
+        <div class="code-block">
+<span class="comment"># I D:/kentlundgren_se/.gitignore</span>
+<span class="command">program/Bjerred/medlemmar/</span>
+        </div>
+        
+        <h4>Lösning 3: Använd Git Submodule (Avancerat)</h4>
+        <p>För avancerade användare som vill ha separata repositories men ändå länka dem:</p>
+        <div class="code-block">
+<span class="comment"># I det överliggande repositoryt</span>
+<span class="command">git submodule add https://github.com/kentlundgren/bjerred-medlemmar.git program/Bjerred/medlemmar</span>
+        </div>
+        
+        <div class="info">
+            <strong>💡 Best Practice:</strong> För separata projekt som inte är relaterade till varandra, 
+            håll dem i helt separata mappar utanför varandra, eller använd Lösning 1 (öppna bara projektmappen i din IDE).
+        </div>
     </div>
 
     <h2>🔗 Användbara resurser</h2>
@@ -505,15 +582,24 @@ case-insensitive och söker i realtid."</span>
     <div class="step">
         <h3>✅ Genomförda steg (5 januari 2025):</h3>
         <ul>
-            <li>☐ Skapat .gitignore-fil</li>
-            <li>☐ Skapat README.md</li>
-            <li>☐ Initierat lokalt Git-repository (<code>git init</code>)</li>
-            <li>☐ Lagt till alla filer (<code>git add .</code>)</li>
-            <li>☐ Gjort första commit</li>
-            <li>☐ Skapat repository på GitHub</li>
+            <li>✅ Skapat .gitignore-fil</li>
+            <li>✅ Skapat README.md</li>
+            <li>✅ Skapat GitHub.html (denna dokumentation)</li>
+            <li>✅ Initierat lokalt Git-repository (<code>git init</code>)</li>
+            <li>✅ Lagt till alla filer (<code>git add .</code>)</li>
+            <li>✅ Gjort första commit</li>
+            <li>✅ Bytt branch från "master" till "main" (<code>git branch -M main</code>)</li>
+            <li>☐ Skapat repository på GitHub (via webbsidan eller CLI)</li>
             <li>☐ Kopplat lokalt repo till GitHub (<code>git remote add origin</code>)</li>
             <li>☐ Pushat till GitHub (<code>git push -u origin main</code>)</li>
         </ul>
+        
+        <div class="info">
+            <strong>📌 Specialfall i detta projekt:</strong><br>
+            Det fanns ett överliggande Git-repository i en parent-mapp som gjorde att Cursor/IDE visade 
+            filer från andra projekt. Detta löstes genom att öppna bara medlemmar-mappen i Cursor 
+            (<strong>File → Open Folder</strong>), så att IDE:n endast fokuserar på detta projekt.
+        </div>
     </div>
 
     <div class="success">
