@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git & GitHub Guide - Bjerred Medlemmar</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 20px;
+        }
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .command {
+            color: #50fa7b;
+        }
+        .comment {
+            color: #6272a4;
+            font-style: italic;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .success {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .step {
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        ul {
+            margin: 10px 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .git-concept {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Git & GitHub Guide - Bjerred Medlemmar</h1>
+    
+    <div class="info">
+        <strong>📅 Skapad:</strong> 5 januari 2025<br>
+        <strong>📁 Projekt:</strong> Bjerred Medlemmar - Medlemshanteringssystem<br>
+        <strong>🔗 GitHub:</strong> <a href="https://github.com/kentlundgren/bjerred-medlemmar" target="_blank">github.com/kentlundgren/bjerred-medlemmar</a>
+    </div>
+
+    <h2>📚 Vad är Git och GitHub?</h2>
+    
+    <div class="git-concept">
+        <h3>Git (Versionshantering)</h3>
+        <p><strong>Git</strong> är ett versionshanteringssystem som låter dig:</p>
+        <ul>
+            <li>Spara historik över alla ändringar i ditt projekt</li>
+            <li>Gå tillbaka till tidigare versioner</li>
+            <li>Arbeta med olika versioner parallellt (branches)</li>
+            <li>Se vem som ändrat vad och när</li>
+        </ul>
+        
+        <h3>GitHub (Remote Repository)</h3>
+        <p><strong>GitHub</strong> är en molntjänst som:</p>
+        <ul>
+            <li>Lagrar dina Git-repositories online</li>
+            <li>Gör det möjligt att dela kod med andra</li>
+            <li>Fungerar som backup för din kod</li>
+            <li>Tillhandahåller verktyg för samarbete</li>
+        </ul>
+    </div>
+
+    <h2>🎯 Viktiga Git-begrepp</h2>
+    
+    <div class="step">
+        <h3>Repository (Repo)</h3>
+        <p>En mapp som Git övervakar. Innehåller alla dina filer plus en dold .git-mapp med historik.</p>
+        
+        <h3>Commit</h3>
+        <p>En "ögonblicksbild" av ditt projekt vid en viss tidpunkt. Varje commit har ett meddelande som beskriver ändringen.</p>
+        
+        <h3>Remote</h3>
+        <p>En version av ditt repository som finns på en server (t.ex. GitHub). Kallas ofta "origin".</p>
+        
+        <h3>Push</h3>
+        <p>Skicka dina lokala commits till remote repository (GitHub).</p>
+        
+        <h3>Pull</h3>
+        <p>Hämta ändringar från remote repository till din lokala dator.</p>
+        
+        <h3>Branch</h3>
+        <p>En parallell version av koden där du kan arbeta utan att påverka huvudversionen (main/master).</p>
+    </div>
+
+    <h2>🛠️ Steg-för-steg: Skapa lokalt och remote repository</h2>
+
+    <div class="step">
+        <h3><span class="step-number">1</span>Förberedelser</h3>
+        <p>Kontrollera att Git är installerat:</p>
+        <div class="code-block">
+<span class="command">git --version</span>
+<span class="comment"># Ska visa något som: git version 2.x.x</span>
+        </div>
+        
+        <p>Konfigurera Git (om inte redan gjort):</p>
+        <div class="code-block">
+<span class="command">git config --global user.name "Kent Lundgren"</span>
+<span class="command">git config --global user.email "lundgren.kent@gmail.com"</span>
+
+<span class="comment"># Kontrollera konfigurationen:</span>
+<span class="command">git config --list</span>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">2</span>Skapa .gitignore-fil</h3>
+        <p>En .gitignore-fil talar om för Git vilka filer som INTE ska versionshanteras.</p>
+        
+        <div class="info">
+            <strong>Varför .gitignore?</strong><br>
+            Vissa filer ska inte laddas upp till GitHub:
+            <ul>
+                <li>Temporära filer</li>
+                <li>Känslig information (lösenord, API-nycklar)</li>
+                <li>Stora filer som genereras automatiskt</li>
+                <li>OS-specifika filer (t.ex. Thumbs.db på Windows)</li>
+            </ul>
+        </div>
+        
+        <p>Exempel på innehåll i .gitignore:</p>
+        <div class="code-block">
+<span class="comment"># Windows specifika filer</span>
+Thumbs.db
+Desktop.ini
+
+<span class="comment"># Backup-filer</span>
+*.bak
+*~
+
+<span class="comment"># Temporära filer</span>
+*.tmp
+*.temp
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">3</span>Initiera lokalt Git-repository</h3>
+        <p>Navigera till projektmappen och initiera Git:</p>
+        <div class="code-block">
+<span class="comment"># Navigera till projektmappen</span>
+<span class="command">cd D:\VåraFiler_primära_på_SSD\Kent_dokument\Data\HTML\kentlundgren_se\program\Bjerred\medlemmar</span>
+
+<span class="comment"># Initiera Git-repository</span>
+<span class="command">git init</span>
+<span class="comment"># Skapar en dold .git-mapp som innehåller all versionshistorik</span>
+        </div>
+        
+        <div class="success">
+            <strong>✅ Resultat:</strong> Du har nu ett lokalt Git-repository!
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">4</span>Lägg till filer (Staging)</h3>
+        <p>Innan du kan commita måste du "stage" filerna (lägga till dem i staging area):</p>
+        <div class="code-block">
+<span class="comment"># Se status på alla filer</span>
+<span class="command">git status</span>
+
+<span class="comment"># Lägg till ALLA filer</span>
+<span class="command">git add .</span>
+
+<span class="comment"># ELLER lägg till specifika filer</span>
+<span class="command">git add index.html</span>
+<span class="command">git add medlemmar.html</span>
+
+<span class="comment"># Kontrollera vad som är staged</span>
+<span class="command">git status</span>
+        </div>
+        
+        <div class="info">
+            <strong>Staging Area:</strong> En mellanstation där du samlar de ändringar du vill inkludera i nästa commit.
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">5</span>Skapa första commit</h3>
+        <p>Spara en ögonblicksbild av projektet:</p>
+        <div class="code-block">
+<span class="command">git commit -m "Initial commit: Bjerred medlemshanteringssystem"</span>
+
+<span class="comment"># -m betyder "message" - alltid skriv ett beskrivande meddelande!</span>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ Viktigt:</strong> Skriv alltid tydliga commit-meddelanden som beskriver VAD du ändrat och VARFÖR.
+        </div>
+        
+        <p>Exempel på bra commit-meddelanden:</p>
+        <ul>
+            <li>"Lagt till sökfunktion för medlemmar"</li>
+            <li>"Fixat bug i datumformatering"</li>
+            <li>"Uppdaterat medlemsdata med nya medlemmar"</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">6</span>Skapa repository på GitHub</h3>
+        <p>Nu ska vi skapa ett remote repository på GitHub:</p>
+        
+        <h4>Alternativ A: Via GitHub webbgränssnitt (Rekommenderas för nybörjare)</h4>
+        <ol>
+            <li>Gå till <a href="https://github.com" target="_blank">github.com</a> och logga in</li>
+            <li>Klicka på "+" i övre högra hörnet → "New repository"</li>
+            <li>Fyll i:
+                <ul>
+                    <li><strong>Repository name:</strong> bjerred-medlemmar</li>
+                    <li><strong>Description:</strong> Medlemshanteringssystem för Bjerred</li>
+                    <li><strong>Public/Private:</strong> Public</li>
+                    <li><strong>VIKTIGT:</strong> Kryssa INTE i "Initialize with README" (vi har redan filer)</li>
+                </ul>
+            </li>
+            <li>Klicka "Create repository"</li>
+        </ol>
+        
+        <h4>Alternativ B: Via GitHub CLI (Kommandorad)</h4>
+        <div class="code-block">
+<span class="comment"># Installera GitHub CLI först (om inte redan installerat)</span>
+<span class="comment"># Ladda ner från: https://cli.github.com/</span>
+
+<span class="comment"># Logga in på GitHub</span>
+<span class="command">gh auth login</span>
+
+<span class="comment"># Skapa repository</span>
+<span class="command">gh repo create bjerred-medlemmar --public --source=. --remote=origin</span>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">7</span>Koppla lokalt repo till GitHub (Remote)</h3>
+        <p>Efter att du skapat repositoryt på GitHub, koppla ihop det med ditt lokala repo:</p>
+        <div class="code-block">
+<span class="comment"># Lägg till remote (GitHub-adressen)</span>
+<span class="command">git remote add origin https://github.com/kentlundgren/bjerred-medlemmar.git</span>
+
+<span class="comment"># Kontrollera att remote är tillagd</span>
+<span class="command">git remote -v</span>
+<span class="comment"># Ska visa:</span>
+<span class="comment"># origin  https://github.com/kentlundgren/bjerred-medlemmar.git (fetch)</span>
+<span class="comment"># origin  https://github.com/kentlundgren/bjerred-medlemmar.git (push)</span>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">8</span>Byt till main-branch (om nödvändigt)</h3>
+        <p>GitHub använder "main" som standardbranch, men Git kan skapa "master":</p>
+        <div class="code-block">
+<span class="comment"># Kontrollera vilken branch du är på</span>
+<span class="command">git branch</span>
+
+<span class="comment"># Om du är på "master", byt till "main"</span>
+<span class="command">git branch -M main</span>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">9</span>Pusha till GitHub</h3>
+        <p>Nu ska vi skicka upp all kod till GitHub:</p>
+        <div class="code-block">
+<span class="comment"># Första gången: pusha och sätt upstream</span>
+<span class="command">git push -u origin main</span>
+
+<span class="comment"># -u (--set-upstream) gör att framtida push/pull kan göras med bara "git push"</span>
+        </div>
+        
+        <div class="success">
+            <strong>🎉 Grattis!</strong> Din kod är nu på GitHub!<br>
+            Besök: <a href="https://github.com/kentlundgren/bjerred-medlemmar" target="_blank">https://github.com/kentlundgren/bjerred-medlemmar</a>
+        </div>
+    </div>
+
+    <h2>🔄 Dagligt arbetsflöde</h2>
+    
+    <div class="step">
+        <h3>När du gör ändringar i projektet:</h3>
+        <div class="code-block">
+<span class="comment"># 1. Se vilka filer som ändrats</span>
+<span class="command">git status</span>
+
+<span class="comment"># 2. Se exakt vad som ändrats</span>
+<span class="command">git diff</span>
+
+<span class="comment"># 3. Lägg till ändrade filer</span>
+<span class="command">git add .</span>
+<span class="comment"># ELLER specifika filer:</span>
+<span class="command">git add index.html medlemmar.html</span>
+
+<span class="comment"># 4. Commita med beskrivande meddelande</span>
+<span class="command">git commit -m "Beskrivning av ändringen"</span>
+
+<span class="comment"># 5. Pusha till GitHub</span>
+<span class="command">git push</span>
+        </div>
+    </div>
+
+    <h2>📖 Användbara Git-kommandon</h2>
+    
+    <div class="step">
+        <h3>Visa historik</h3>
+        <div class="code-block">
+<span class="comment"># Visa commit-historik</span>
+<span class="command">git log</span>
+
+<span class="comment"># Kompakt vy med en rad per commit</span>
+<span class="command">git log --oneline</span>
+
+<span class="comment"># Grafisk vy av branches</span>
+<span class="command">git log --oneline --graph --all</span>
+        </div>
+        
+        <h3>Ångra ändringar</h3>
+        <div class="code-block">
+<span class="comment"># Ångra ändringar i en fil (innan add)</span>
+<span class="command">git restore index.html</span>
+
+<span class="comment"># Ta bort fil från staging (efter add, innan commit)</span>
+<span class="command">git restore --staged index.html</span>
+
+<span class="comment"># Ändra senaste commit-meddelandet</span>
+<span class="command">git commit --amend -m "Nytt meddelande"</span>
+        </div>
+        
+        <h3>Branches</h3>
+        <div class="code-block">
+<span class="comment"># Visa alla branches</span>
+<span class="command">git branch</span>
+
+<span class="comment"># Skapa ny branch</span>
+<span class="command">git branch ny-funktion</span>
+
+<span class="comment"># Byt till en branch</span>
+<span class="command">git checkout ny-funktion</span>
+
+<span class="comment"># Skapa OCH byt till ny branch</span>
+<span class="command">git checkout -b ny-funktion</span>
+
+<span class="comment"># Merga branch till main</span>
+<span class="command">git checkout main</span>
+<span class="command">git merge ny-funktion</span>
+        </div>
+        
+        <h3>Hämta ändringar från GitHub</h3>
+        <div class="code-block">
+<span class="comment"># Hämta och merga ändringar</span>
+<span class="command">git pull</span>
+
+<span class="comment"># Bara hämta (utan att merga)</span>
+<span class="command">git fetch</span>
+        </div>
+    </div>
+
+    <h2>💡 Bra att veta</h2>
+    
+    <div class="step">
+        <h3>Commit ofta!</h3>
+        <p>Gör små, frekventa commits istället för stora sällsynta. Det gör det lättare att:</p>
+        <ul>
+            <li>Förstå vad som ändrats</li>
+            <li>Hitta när en bug introducerades</li>
+            <li>Ångra specifika ändringar</li>
+        </ul>
+        
+        <h3>Skriv bra commit-meddelanden</h3>
+        <p>Format:</p>
+        <div class="code-block">
+<span class="comment"># Kort sammanfattning (max 50 tecken)</span>
+<span class="command">git commit -m "Lagt till sökfunktion"</span>
+
+<span class="comment"># Med längre beskrivning</span>
+<span class="command">git commit -m "Lagt till sökfunktion
+
+Användare kan nu söka medlemmar på namn, 
+medlemsnummer eller datum. Sökningen är 
+case-insensitive och söker i realtid."</span>
+        </div>
+        
+        <h3>.gitignore är viktig!</h3>
+        <p>Lägg alltid till en .gitignore INNAN du gör första commit. Det förhindrar att oönskade filer laddas upp.</p>
+        
+        <h3>README.md</h3>
+        <p>En README-fil är första intrycket av ditt projekt. Den bör innehålla:</p>
+        <ul>
+            <li>Vad projektet gör</li>
+            <li>Hur man installerar/använder det</li>
+            <li>Eventuella krav (dependencies)</li>
+            <li>Kontaktinformation</li>
+        </ul>
+    </div>
+
+    <h2>🚨 Vanliga problem och lösningar</h2>
+    
+    <div class="step">
+        <h3>Problem: "fatal: not a git repository"</h3>
+        <p><strong>Lösning:</strong> Du är inte i en Git-mapp. Kör <code>git init</code> eller navigera till rätt mapp.</p>
+        
+        <h3>Problem: "fatal: remote origin already exists"</h3>
+        <p><strong>Lösning:</strong> Remote finns redan. Ta bort och lägg till igen:</p>
+        <div class="code-block">
+<span class="command">git remote remove origin</span>
+<span class="command">git remote add origin https://github.com/kentlundgren/bjerred-medlemmar.git</span>
+        </div>
+        
+        <h3>Problem: Push nekad (authentication failed)</h3>
+        <p><strong>Lösning:</strong> Du behöver autentisera. Använd GitHub CLI eller Personal Access Token:</p>
+        <div class="code-block">
+<span class="comment"># Alternativ 1: GitHub CLI</span>
+<span class="command">gh auth login</span>
+
+<span class="comment"># Alternativ 2: Använd SSH istället för HTTPS</span>
+<span class="comment"># (kräver SSH-nyckel uppsatt på GitHub)</span>
+<span class="command">git remote set-url origin git@github.com:kentlundgren/bjerred-medlemmar.git</span>
+        </div>
+        
+        <h3>Problem: Merge conflicts</h3>
+        <p><strong>Lösning:</strong> När Git inte kan merga automatiskt:</p>
+        <ol>
+            <li>Öppna filen med konflikten</li>
+            <li>Sök efter markeringar: <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code></li>
+            <li>Välj vilken version du vill behålla</li>
+            <li>Ta bort markeringarna</li>
+            <li>Kör: <code>git add .</code> och <code>git commit</code></li>
+        </ol>
+    </div>
+
+    <h2>🔗 Användbara resurser</h2>
+    
+    <div class="step">
+        <ul>
+            <li><a href="https://git-scm.com/doc" target="_blank">Officiell Git-dokumentation</a></li>
+            <li><a href="https://docs.github.com/en" target="_blank">GitHub Docs</a></li>
+            <li><a href="https://learngitbranching.js.org/" target="_blank">Learn Git Branching (interaktiv)</a></li>
+            <li><a href="https://education.github.com/git-cheat-sheet-education.pdf" target="_blank">Git Cheat Sheet (PDF)</a></li>
+            <li><a href="https://cli.github.com/" target="_blank">GitHub CLI</a></li>
+        </ul>
+    </div>
+
+    <h2>📝 Checklista för detta projekt</h2>
+    
+    <div class="step">
+        <h3>✅ Genomförda steg (5 januari 2025):</h3>
+        <ul>
+            <li>☐ Skapat .gitignore-fil</li>
+            <li>☐ Skapat README.md</li>
+            <li>☐ Initierat lokalt Git-repository (<code>git init</code>)</li>
+            <li>☐ Lagt till alla filer (<code>git add .</code>)</li>
+            <li>☐ Gjort första commit</li>
+            <li>☐ Skapat repository på GitHub</li>
+            <li>☐ Kopplat lokalt repo till GitHub (<code>git remote add origin</code>)</li>
+            <li>☐ Pushat till GitHub (<code>git push -u origin main</code>)</li>
+        </ul>
+    </div>
+
+    <div class="success">
+        <h3>🎓 Nästa steg i din Git-resa:</h3>
+        <ol>
+            <li>Öva på att göra commits regelbundet</li>
+            <li>Experimentera med branches för nya funktioner</li>
+            <li>Lär dig använda <code>git log</code> för att utforska historiken</li>
+            <li>Testa att klona repositoryt till en annan dator</li>
+            <li>Utforska GitHub Actions för automatisering</li>
+        </ol>
+    </div>
+
+    <footer style="margin-top: 50px; padding-top: 20px; border-top: 2px solid #ddd; text-align: center; color: #666;">
+        <p>Skapad av Kent Lundgren | 5 januari 2025</p>
+        <p>För projektet: Bjerred Medlemmar</p>
+    </footer>
+</body>
+</html>
