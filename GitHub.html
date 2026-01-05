@@ -101,7 +101,7 @@
     <div class="info">
         <strong>📅 Skapad:</strong> 5 januari 2025<br>
         <strong>📁 Projekt:</strong> Bjerred Medlemmar - Medlemshanteringssystem<br>
-        <strong>🔗 GitHub:</strong> <a href="https://github.com/kentlundgren/bjerred-medlemmar" target="_blank">github.com/kentlundgren/bjerred-medlemmar</a>
+        <strong>🔗 GitHub:</strong> <a href="https://github.com/kentlundgren/Bjerred-medlemmar" target="_blank">github.com/kentlundgren/Bjerred-medlemmar</a>
     </div>
 
     <h2>📚 Vad är Git och GitHub?</h2>
@@ -270,7 +270,7 @@ Desktop.ini
             <li>Klicka på "+" i övre högra hörnet → "New repository"</li>
             <li>Fyll i:
                 <ul>
-                    <li><strong>Repository name:</strong> bjerred-medlemmar</li>
+                    <li><strong>Repository name:</strong> Bjerred-medlemmar</li>
                     <li><strong>Description:</strong> Medlemshanteringssystem för Bjerred</li>
                     <li><strong>Public/Private:</strong> Public</li>
                     <li><strong>VIKTIGT:</strong> Kryssa INTE i "Initialize with README" (vi har redan filer)</li>
@@ -288,7 +288,7 @@ Desktop.ini
 <span class="command">gh auth login</span>
 
 <span class="comment"># Skapa repository</span>
-<span class="command">gh repo create bjerred-medlemmar --public --source=. --remote=origin</span>
+<span class="command">gh repo create Bjerred-medlemmar --public --source=. --remote=origin</span>
         </div>
     </div>
 
@@ -297,13 +297,13 @@ Desktop.ini
         <p>Efter att du skapat repositoryt på GitHub, koppla ihop det med ditt lokala repo:</p>
         <div class="code-block">
 <span class="comment"># Lägg till remote (GitHub-adressen)</span>
-<span class="command">git remote add origin https://github.com/kentlundgren/bjerred-medlemmar.git</span>
+<span class="command">git remote add origin https://github.com/kentlundgren/Bjerred-medlemmar.git</span>
 
 <span class="comment"># Kontrollera att remote är tillagd</span>
 <span class="command">git remote -v</span>
 <span class="comment"># Ska visa:</span>
-<span class="comment"># origin  https://github.com/kentlundgren/bjerred-medlemmar.git (fetch)</span>
-<span class="comment"># origin  https://github.com/kentlundgren/bjerred-medlemmar.git (push)</span>
+<span class="comment"># origin  https://github.com/kentlundgren/Bjerred-medlemmar.git (fetch)</span>
+<span class="comment"># origin  https://github.com/kentlundgren/Bjerred-medlemmar.git (push)</span>
         </div>
     </div>
 
@@ -356,7 +356,7 @@ Desktop.ini
         
         <div class="success">
             <strong>🎉 Grattis!</strong> Din kod är nu på GitHub!<br>
-            Besök: <a href="https://github.com/kentlundgren/bjerred-medlemmar" target="_blank">https://github.com/kentlundgren/bjerred-medlemmar</a>
+            Besök: <a href="https://github.com/kentlundgren/Bjerred-medlemmar" target="_blank">https://github.com/kentlundgren/Bjerred-medlemmar</a>
         </div>
     </div>
 
@@ -488,18 +488,130 @@ case-insensitive och söker i realtid."</span>
         <p><strong>Lösning:</strong> Remote finns redan. Ta bort och lägg till igen:</p>
         <div class="code-block">
 <span class="command">git remote remove origin</span>
-<span class="command">git remote add origin https://github.com/kentlundgren/bjerred-medlemmar.git</span>
+<span class="command">git remote add origin https://github.com/kentlundgren/Bjerred-medlemmar.git</span>
         </div>
         
-        <h3>Problem: Push nekad (authentication failed)</h3>
-        <p><strong>Lösning:</strong> Du behöver autentisera. Använd GitHub CLI eller Personal Access Token:</p>
+        <h3>Problem: Push nekad - Permission denied / Authentication failed</h3>
+        <p><strong>Exempel på fel:</strong></p>
         <div class="code-block">
-<span class="comment"># Alternativ 1: GitHub CLI</span>
-<span class="command">gh auth login</span>
+<span class="comment">remote: Permission to kentlundgren/Bjerred-medlemmar.git denied to lundgren9.</span>
+<span class="comment">fatal: unable to access 'https://github.com/...': The requested URL returned error: 403</span>
+        </div>
+        
+        <p><strong>Orsak:</strong> Git försöker använda fel GitHub-konto (t.ex. "lundgren9" istället för "kentlundgren") för att pusha. Detta händer när Windows har sparat gamla inloggningsuppgifter.</p>
+        
+        <div class="info">
+            <strong>🔐 Hur Git-autentisering fungerar i Windows:</strong><br><br>
+            
+            <strong>1. Första gången du pushar:</strong><br>
+            Git ber dig logga in på GitHub (vanligtvis via en popup i webbläsaren).<br><br>
+            
+            <strong>2. Windows sparar dina credentials:</strong><br>
+            Efter lyckad inloggning sparar Windows dina autentiseringsuppgifter i <strong>Windows Credential Manager</strong> 
+            (Autentiseringshanteraren på svenska) under namnet: <code>git:https://github.com</code><br><br>
+            
+            <strong>3. Framtida push-kommandon:</strong><br>
+            Git använder automatiskt de sparade credentials - du behöver inte logga in igen.<br><br>
+            
+            <strong>⚠️ Problemet:</strong> Om du har flera GitHub-konton eller gamla credentials, kan Git använda fel konto!
+        </div>
+        
+        <p><strong>Se bild:</strong> Windows Credential Manager med sparade Git-credentials</p>
+        <img src="git_autentisering.jpg" alt="Windows Credential Manager med Git-autentiseringsuppgifter" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; margin: 10px 0;">
+        
+        <h4>Lösning 1: Rensa Windows Credential Manager (Rekommenderas för att byta konto) ✅</h4>
+        <ol>
+            <li>Tryck på <strong>Windows-knappen</strong> och sök efter: <strong>"Autentiseringshanteraren"</strong> eller <strong>"Credential Manager"</strong></li>
+            <li>Klicka på <strong>"Windows-autentiseringsuppgifter"</strong> (Windows Credentials)</li>
+            <li>Leta efter poster som börjar med <strong>"git:https://github.com"</strong> (se bild ovan)</li>
+            <li>Klicka på pilen för att expandera posten</li>
+            <li>Klicka på <strong>"Ta bort"</strong> (Remove)</li>
+            <li>Försök pusha igen: <code>git push -u origin main</code></li>
+            <li>Du får nu en ny inloggningsprompt - logga in med rätt konto (kentlundgren)</li>
+        </ol>
+        
+        <div class="warning">
+            <strong>⚠️ Viktigt:</strong> När du tar bort credentials och pushar igen kommer Windows automatiskt 
+            att skapa NYA credentials efter att du loggat in. Dessa nya credentials sparas permanent tills 
+            du tar bort dem igen.
+        </div>
+        
+        <h4>Lösning 2: Lägg till det andra kontot som Collaborator 👥</h4>
+        <p>Om du har två GitHub-konton (t.ex. "kentlundgren" och "lundgren9") och vill att båda ska ha tillgång 
+        till repositoryt, kan du lägga till det andra kontot som collaborator:</p>
+        
+        <p><strong>Steg för att lägga till collaborator:</strong></p>
+        <ol>
+            <li>Gå till ditt GitHub-repository: <code>https://github.com/kentlundgren/Bjerred-medlemmar</code></li>
+            <li>Klicka på <strong>Settings</strong> (längst till höger i menyn)</li>
+            <li>Klicka på <strong>Collaborators</strong> i vänstermenyn under "Access"</li>
+            <li>Klicka på <strong>"Add people"</strong></li>
+            <li>Skriv användarnamnet (t.ex. "lundgren9") och klicka <strong>"Add [username] to this repository"</strong></li>
+            <li>Den andra användaren får en invitation via email och måste acceptera den</li>
+        </ol>
+        
+        <p><strong>Se bild:</strong> Collaborators-sidan på GitHub</p>
+        <img src="collaborators.jpg" alt="GitHub Collaborators-sida med pending invite" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; margin: 10px 0;">
+        
+        <p><strong>Acceptera collaborator-invitation:</strong></p>
+        <ol>
+            <li>Logga in på GitHub med kontot som blev inbjudet (t.ex. lundgren9)</li>
+            <li>Du kommer se en notifikation om invitation</li>
+            <li>Gå till repositoryt eller klicka på notifikationen</li>
+            <li>Klicka på <strong>"Accept invitation"</strong></li>
+            <li>Nu har både "kentlundgren" och "lundgren9" push-rättigheter!</li>
+        </ol>
+        
+        <p><strong>Efter att invitation accepterats:</strong></p>
+        <div class="code-block">
+<span class="comment"># Nu kan du pusha utan problem!</span>
+<span class="command">git push -u origin main</span>
 
-<span class="comment"># Alternativ 2: Använd SSH istället för HTTPS</span>
-<span class="comment"># (kräver SSH-nyckel uppsatt på GitHub)</span>
-<span class="command">git remote set-url origin git@github.com:kentlundgren/bjerred-medlemmar.git</span>
+<span class="comment"># Git kommer använda lundgren9's credentials och det fungerar nu</span>
+<span class="comment"># eftersom lundgren9 är collaborator</span>
+        </div>
+        
+        <div class="info">
+            <strong>📌 När ska du använda Collaborators?</strong>
+            <ul>
+                <li>✅ Du har två separata GitHub-konton som båda behöver push-access</li>
+                <li>✅ Du arbetar i team och andra personer ska kunna pusha</li>
+                <li>✅ Du vill ge någon annan rättigheter att ändra i repositoryt</li>
+            </ul>
+            
+            <strong>När ska du INTE använda Collaborators?</strong>
+            <ul>
+                <li>❌ Du vill byta från ett konto till ett annat permanent</li>
+                <li>❌ "lundgren9" är gamla/felaktiga credentials som inte längre ska användas</li>
+            </ul>
+            
+            <strong>I ditt fall:</strong> Om både kentlundgren och lundgren9 är dina konton, är collaborator-lösningen perfekt! 
+            Om lundgren9 bara är gamla credentials, använd Lösning 1 (rensa Credential Manager) istället.
+        </div>
+        
+        <h4>Lösning 3: Använd GitHub CLI</h4>
+        <div class="code-block">
+<span class="comment"># Installera GitHub CLI från: https://cli.github.com/</span>
+<span class="command">gh auth login</span>
+<span class="comment"># Följ instruktionerna och välj rätt konto</span>
+        </div>
+        
+        <h4>Lösning 4: Använd SSH istället för HTTPS</h4>
+        <p>SSH-nycklar är mer säkra och kräver ingen lösenordsinloggning:</p>
+        <div class="code-block">
+<span class="comment"># Generera SSH-nyckel (om du inte har en)</span>
+<span class="command">ssh-keygen -t ed25519 -C "lundgren.kent@gmail.com"</span>
+
+<span class="comment"># Kopiera din publika nyckel</span>
+<span class="command">cat ~/.ssh/id_ed25519.pub</span>
+
+<span class="comment"># Lägg till nyckeln på GitHub: Settings → SSH and GPG keys → New SSH key</span>
+
+<span class="comment"># Ändra remote URL till SSH</span>
+<span class="command">git remote set-url origin git@github.com:kentlundgren/Bjerred-medlemmar.git</span>
+
+<span class="comment"># Pusha med SSH</span>
+<span class="command">git push -u origin main</span>
         </div>
         
         <h3>Problem: Merge conflicts</h3>
@@ -556,7 +668,7 @@ D:/
         <p>För avancerade användare som vill ha separata repositories men ändå länka dem:</p>
         <div class="code-block">
 <span class="comment"># I det överliggande repositoryt</span>
-<span class="command">git submodule add https://github.com/kentlundgren/bjerred-medlemmar.git program/Bjerred/medlemmar</span>
+<span class="command">git submodule add https://github.com/kentlundgren/Bjerred-medlemmar.git program/Bjerred/medlemmar</span>
         </div>
         
         <div class="info">
@@ -589,16 +701,33 @@ D:/
             <li>✅ Lagt till alla filer (<code>git add .</code>)</li>
             <li>✅ Gjort första commit</li>
             <li>✅ Bytt branch från "master" till "main" (<code>git branch -M main</code>)</li>
-            <li>☐ Skapat repository på GitHub (via webbsidan eller CLI)</li>
-            <li>☐ Kopplat lokalt repo till GitHub (<code>git remote add origin</code>)</li>
-            <li>☐ Pushat till GitHub (<code>git push -u origin main</code>)</li>
+            <li>✅ Skapat repository på GitHub: <a href="https://github.com/kentlundgren/Bjerred-medlemmar" target="_blank">Bjerred-medlemmar</a></li>
+            <li>✅ Kopplat lokalt repo till GitHub (<code>git remote add origin</code>)</li>
+            <li>⏳ Pushat till GitHub - <strong>Väntar på autentisering</strong></li>
         </ul>
         
+        <div class="warning">
+            <strong>🔄 Aktuell status: Autentiseringsproblem</strong><br>
+            Git försöker använda kontot "lundgren9" istället för "kentlundgren" för att pusha. 
+            Detta beror på sparade credentials i Windows Credential Manager.
+            <br><br>
+            <strong>Vald lösning:</strong> Lagt till "lundgren9" som collaborator (pending invite) 
+            så att båda kontona kan pusha till repositoryt.
+        </div>
+        
         <div class="info">
-            <strong>📌 Specialfall i detta projekt:</strong><br>
+            <strong>📌 Specialfall i detta projekt:</strong><br><br>
+            
+            <strong>1. Överliggande Git-repository:</strong><br>
             Det fanns ett överliggande Git-repository i en parent-mapp som gjorde att Cursor/IDE visade 
             filer från andra projekt. Detta löstes genom att öppna bara medlemmar-mappen i Cursor 
-            (<strong>File → Open Folder</strong>), så att IDE:n endast fokuserar på detta projekt.
+            (<strong>File → Open Folder</strong>), så att IDE:n endast fokuserar på detta projekt.<br><br>
+            
+            <strong>2. Multipla GitHub-konton:</strong><br>
+            Två GitHub-konton används: "kentlundgren" (ägare) och "lundgren9" (collaborator). 
+            Windows Credential Manager sparade credentials för lundgren9, vilket orsakade 
+            autentiseringsproblem vid push. Detta löstes genom att lägga till lundgren9 
+            som collaborator i projektet.
         </div>
     </div>
 

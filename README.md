@@ -193,8 +193,8 @@ För mer detaljerad information om Git och GitHub-användning, se:
 ## 🔗 Länkar
 
 - [Projektets hemsida](https://kentlundgren.se)
-- [GitHub Repository](https://github.com/kentlundgren/bjerred-medlemmar)
-- [Rapportera problem](https://github.com/kentlundgren/bjerred-medlemmar/issues)
+- [GitHub Repository](https://github.com/kentlundgren/Bjerred-medlemmar)
+- [Rapportera problem](https://github.com/kentlundgren/Bjerred-medlemmar/issues)
 
 ---
 
