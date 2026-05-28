@@ -1,5 +1,15 @@
 # 🏛️ Bjerred Medlemmar
 
+## 🔗 Direktlänkar
+
+| Sida | Länk |
+|------|------|
+| 📊 **Live-sidan (statistik)** | [kentlundgren.github.io/Bjerred-medlemmar](https://kentlundgren.github.io/Bjerred-medlemmar/) |
+| 📚 **Git & GitHub-guide** | [GitHub.html (live)](https://kentlundgren.github.io/Bjerred-medlemmar/GitHub.html) |
+| 💻 **GitHub-repo (källkod)** | [github.com/kentlundgren/Bjerred-medlemmar](https://github.com/kentlundgren/Bjerred-medlemmar/tree/main) |
+
+---
+
 Ett webbaserat medlemshanteringssystem för Bjerred, utvecklat med vanilla JavaScript, HTML och CSS.
 
 ## 📋 Beskrivning
