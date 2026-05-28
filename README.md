@@ -157,7 +157,35 @@ Vill du bidra? Fantastiskt! Här är hur:
 5. Pusha till din branch (`git push origin feature/ny-funktion`)
 6. Öppna en Pull Request
 
+## 📊 Aktuell statistik (maj 2026)
+
+| Typ | Antal |
+|-----|-------|
+| Familjemedlemskap | 446 |
+| Enskilda medlemskap | 884 |
+| **Totalt** | **1 330** |
+| Netto nya efter bastuöppning (juli 2025) | 773 |
+
+Källa för 2026-data: [Wondr Subscribers/Count2](https://bjerredssaltsjobad.wondr.se/w_report/reports/report/Subscribers/Count2) *(kräver inloggning)*
+
 ## 📝 Versionshistorik
+
+- **v3.0** (28 maj 2026)
+  - Lagt till månadsdata för jan–maj 2026
+  - Nytt tidsfilter "År 2026" (satt som standard)
+  - Y-axeln hanterar nu negativa nettoförändringar
+  - Statistikkort uppdaterade med maj 2026-värden
+  - Länk till Wondr-rapporten tillagd i fotnoten
+  - Lokal mapp återkopplad till GitHub-repo (git init + merge + push)
+
+- **v2.1** (23 december 2025)
+  - Exkluderat "Registrering av familjemedlemmar" från statistiken
+  - Uppdaterad fotnot med förklaring av exkluderade kategorier
+
+- **v2.0** (23 december 2025)
+  - Lagt till total-linje i ackumulerat diagram
+  - Ökat diagramhöjden för bättre läsbarhet
+  - Förbättrad responsiv design
 
 - **v1.0** (5 januari 2025)
   - Initial release

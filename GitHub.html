@@ -690,6 +690,219 @@ D:/
         </ul>
     </div>
 
+    <!-- ============================================================
+         UPPDATERING 2026-05-28: Ny sektion om att återkoppla en lokal
+         mapp till ett befintligt GitHub-repo (utan .git-mapp)
+         ============================================================ -->
+    <h2>🔄 Återkoppla lokal mapp till befintligt GitHub-repo (28 maj 2026)</h2>
+
+    <div class="info">
+        <strong>📖 Situationen som uppstod:</strong><br>
+        Den lokala mappen hade <strong>ingen <code>.git</code>-mapp</strong> – Git var aldrig initierat där 
+        (eller hade tagits bort). Cursor visade knappen <em>"Publish to GitHub"</em> istället för att 
+        visa kopplingen till det befintliga repot på GitHub.
+        <br><br>
+        GitHub-repot existerade redan: 
+        <a href="https://github.com/kentlundgren/Bjerred-medlemmar" target="_blank">github.com/kentlundgren/Bjerred-medlemmar</a> 
+        (med 7 commits och den gamla versionen av index.html).
+        <br><br>
+        Den lokala mappen hade <em>nyare</em> filer (index.html uppdaterad med 2026-data) 
+        som skulle ersätta det som låg på GitHub.
+    </div>
+
+    <div class="warning">
+        <strong>⚠️ Viktigt – klicka INTE på "Publish to GitHub" i Cursor!</strong><br>
+        Knappen "Publish to GitHub" i Cursor/VS Code <em>skapar ett nytt repo</em> på GitHub. 
+        Den kopplar INTE till ett befintligt repo. Om du klickar på den och redan har ett repo 
+        med samma namn kan du råka skapa ett duplikat eller ett nytt tomt repo.
+    </div>
+
+    <div class="step">
+        <h3>Diagnos – kontrollera om git är initierat</h3>
+        <p>Kör detta kommando i terminalen för att se om det finns ett git-repo i mappen:</p>
+        <div class="code-block">
+<span class="command">git status</span>
+<span class="comment"># Om du ser detta fel – saknas .git-mappen:</span>
+<span class="comment"># fatal: not a git repository (or any of the parent directories): .git</span>
+<span class="comment">#</span>
+<span class="comment"># Om git är initierat ser du istället något som:</span>
+<span class="comment"># On branch main</span>
+<span class="comment"># nothing to commit, working tree clean</span>
+        </div>
+        <div class="warning">
+            <strong>I PowerShell:</strong> Kommandot fungerar som vanligt. Men <code>&amp;&amp;</code> för att kedja kommandon 
+            fungerar INTE i PowerShell – dela upp dem på separata rader istället.
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">1</span>Initiera git med rätt branch-namn</h3>
+        <p>Skapa en ny <code>.git</code>-mapp i den lokala mappen. Flaggan <code>-b main</code> sätter 
+        branch-namnet direkt till "main" (istället för gamla standardnamnet "master"):</p>
+        <div class="code-block">
+<span class="command">git init -b main</span>
+<span class="comment"># Skapar: Initialized empty Git repository in D:/.../medlemmar/.git/</span>
+<span class="comment"># OBS: Flaggan -b finns i Git 2.28+. På äldre Git använd: git init + git branch -M main</span>
+        </div>
+        <div class="success">
+            <strong>✅ Resultat:</strong> En tom .git-mapp skapas i din lokala mapp. 
+            Cursor/IDE byter nu från "Publish to GitHub" till att visa git-panelen.
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">2</span>Koppla till det befintliga GitHub-repot</h3>
+        <p>Tala om för git var det remote repositoryt finns. "origin" är standardnamnet för det primära remote-repot:</p>
+        <div class="code-block">
+<span class="command">git remote add origin https://github.com/kentlundgren/Bjerred-medlemmar.git</span>
+
+<span class="comment"># Verifiera att det lades till korrekt:</span>
+<span class="command">git remote -v</span>
+<span class="comment"># Ska visa:</span>
+<span class="comment"># origin  https://github.com/kentlundgren/Bjerred-medlemmar.git (fetch)</span>
+<span class="comment"># origin  https://github.com/kentlundgren/Bjerred-medlemmar.git (push)</span>
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">3</span>Hämta remote-historiken (utan att skriva över lokala filer)</h3>
+        <p><code>git fetch</code> laddar ner all historik och data från GitHub 
+        <strong>utan att röra dina lokala filer</strong>. Det är säkert att köra:</p>
+        <div class="code-block">
+<span class="command">git fetch origin</span>
+<span class="comment"># Visar: * [new branch]  main  -> origin/main</span>
+<span class="comment"># Det betyder att git nu "vet" om remote-historiken</span>
+<span class="comment"># men dina lokala filer är fortfarande orörda</span>
+        </div>
+        <div class="info">
+            <strong>Skillnad fetch vs pull:</strong><br>
+            <code>git fetch</code> = hämtar info om vad som finns på remote, utan att ändra lokala filer.<br>
+            <code>git pull</code> = hämtar + slår ihop med dina lokala filer (kan skriva över ändringar!).
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">4</span>Stagea och committa lokala filer</h3>
+        <p>Nu lägger vi till alla lokala filer i en commit. Det skapar den lokala historiken:</p>
+        <div class="code-block">
+<span class="comment"># Se vilka filer som finns (alla visar "U" = Untracked = ej i git än)</span>
+<span class="command">git status</span>
+
+<span class="comment"># Stagea alla filer (-A inkluderar även borttagna filer, mer komplett än ".")</span>
+<span class="command">git add -A</span>
+
+<span class="comment"># Skapa commit med beskrivande meddelande</span>
+<span class="comment"># I PowerShell: använd en temp-fil för meddelandet (inte heredoc som i bash)</span>
+<span class="command">Set-Content -Path "$env:TEMP\commitmsg.txt" -Encoding UTF8 -Value "Version 3.0: Uppdaterad med 2026-data"</span>
+<span class="command">git commit -F "$env:TEMP\commitmsg.txt"</span>
+        </div>
+        <div class="info">
+            <strong>Varför temp-fil för commit-meddelandet i PowerShell?</strong><br>
+            Bash stöder heredoc-syntax (<code>&lt;&lt;'EOF'</code>) för flerradiga strängar. 
+            PowerShell gör det inte – det ger syntaxfel. 
+            Lösningen är att skriva meddelandet till en temporär fil och använda flaggan <code>-F</code> (file).
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">5</span>Sammanfoga med remote-historiken (det knepiga steget!)</h3>
+        <p>Nu har vi ett lokalt problem: vår lokala branch har <strong>ingen gemensam historik</strong> 
+        med remote-branchen (origin/main). Git kallar det "unrelated histories".</p>
+        
+        <div class="warning">
+            <strong>⚠️ Varför behöver vi detta steg?</strong><br>
+            Om vi försöker pusha nu utan detta steg får vi felet:<br>
+            <code>! [rejected] main -> main (non-fast-forward)</code><br>
+            <code>error: failed to push some refs</code><br><br>
+            Git nekar pushen för att det lokala repot inte är en "fortsättning" på remote-historiken.
+            De två historierna startade oberoende av varandra.
+        </div>
+        
+        <p>Lösningen är att <strong>merga in remote-historiken</strong> och tala om för git att vi vet 
+        vad vi gör med flaggan <code>--allow-unrelated-histories</code>:</p>
+        
+        <div class="code-block">
+<span class="command">git merge --allow-unrelated-histories -X ours origin/main -m "Anslut till remote-historik, behåll lokala filer"</span>
+
+<span class="comment"># Flaggor förklarade:</span>
+<span class="comment"># --allow-unrelated-histories  = tillåt merge av två "orelaterade" historiker</span>
+<span class="comment"># -X ours                      = vid konflikter: behåll VÅR (lokala) version</span>
+<span class="comment">#                                (t.ex. vår uppdaterade index.html vinner mot den gamla på GitHub)</span>
+<span class="comment"># -m "..."                     = commit-meddelande för merge-commiten</span>
+        </div>
+        
+        <div class="success">
+            <strong>✅ Vad händer efter merge?</strong><br>
+            Filer som BARA finns på GitHub (t.ex. README.md, .gitignore, gamla .jpg-bilder) 
+            hämtas ner och läggs till i din lokala mapp.<br>
+            Filer som finns på BÅDA ställena (t.ex. index.html) – din lokala version vinner tack vare <code>-X ours</code>.
+        </div>
+        
+        <div class="git-concept">
+            <strong>📖 Alternativet: Force Push (använd ej om du kan undvika det)</strong><br><br>
+            Cursor/VS Code erbjuder ibland "Force Push" som lösning på non-fast-forward-problemet. 
+            Force push (<code>git push --force</code>) skriver ÖVER hela remote-historiken med din lokala.
+            <ul>
+                <li>✅ Fungerar tekniskt och är OK om du är ensam på repot och VET vad du gör</li>
+                <li>❌ Farligt om andra jobbar i samma repo – du raderar deras commits!</li>
+                <li>❌ Du förlorar möjligheten att se vad som tidigare låg på GitHub</li>
+            </ul>
+            <strong>Bättre approach:</strong> Använd <code>git merge --allow-unrelated-histories</code> 
+            som vi gör här – det bevarar all historik från båda håll.
+        </div>
+    </div>
+
+    <div class="step">
+        <h3><span class="step-number">6</span>Pusha till GitHub</h3>
+        <p>Nu kan vi äntligen pusha! Flaggan <code>-u</code> sätter upp "tracking" så att 
+        framtida <code>git push</code> och <code>git pull</code> vet vilken remote-branch 
+        de ska prata med:</p>
+        <div class="code-block">
+<span class="command">git push -u origin main</span>
+<span class="comment"># Svar: branch 'main' set up to track 'origin/main'.</span>
+<span class="comment"># Svar: To https://github.com/kentlundgren/Bjerred-medlemmar.git</span>
+<span class="comment"># Svar:    bb668b2..4504f3b  main -> main</span>
+<span class="comment">#</span>
+<span class="comment"># OBS: Varningen "git: 'credential-manager-core' is not a git command" är ofarlig!</span>
+<span class="comment"># Det är bara ett gammalt namn på credential-hjälparen. Push lyckas ändå.</span>
+        </div>
+        <div class="success">
+            <strong>🎉 Klart!</strong> Din uppdaterade index.html och alla övriga lokala filer 
+            är nu pushade till GitHub. GitHub Pages-sidan uppdateras automatiskt inom några minuter.
+        </div>
+    </div>
+
+    <div class="step">
+        <h3>Hela processen sammanfattad – PowerShell-kommandon</h3>
+        <p>Här är alla kommandon i rätt ordning för att återkoppla en lokal mapp 
+        till ett befintligt GitHub-repo:</p>
+        <div class="code-block">
+<span class="comment"># OBS: Kör kommandona ett i taget i PowerShell (inte && mellan dem)</span>
+
+<span class="comment"># Steg 1: Initiera git</span>
+<span class="command">git init -b main</span>
+
+<span class="comment"># Steg 2: Koppla till GitHub-repo</span>
+<span class="command">git remote add origin https://github.com/kentlundgren/Bjerred-medlemmar.git</span>
+
+<span class="comment"># Steg 3: Hämta remote-historik (rör ej lokala filer)</span>
+<span class="command">git fetch origin</span>
+
+<span class="comment"># Steg 4: Stagea alla lokala filer</span>
+<span class="command">git add -A</span>
+
+<span class="comment"># Steg 5: Committa (via temp-fil eftersom PowerShell inte stöder heredoc)</span>
+<span class="command">Set-Content -Path "$env:TEMP\msg.txt" -Encoding UTF8 -Value "Ditt commit-meddelande här"</span>
+<span class="command">git commit -F "$env:TEMP\msg.txt"</span>
+
+<span class="comment"># Steg 6: Merga in remote-historik (lokala filer vinner vid konflikter)</span>
+<span class="command">git merge --allow-unrelated-histories -X ours origin/main -m "Anslut till remote-historik"</span>
+
+<span class="comment"># Steg 7: Pusha!</span>
+<span class="command">git push -u origin main</span>
+        </div>
+    </div>
+
     <h2>📝 Checklista för detta projekt</h2>
     
     <div class="step">
@@ -704,17 +917,21 @@ D:/
             <li>✅ Bytt branch från "master" till "main" (<code>git branch -M main</code>)</li>
             <li>✅ Skapat repository på GitHub: <a href="https://github.com/kentlundgren/Bjerred-medlemmar" target="_blank">Bjerred-medlemmar</a></li>
             <li>✅ Kopplat lokalt repo till GitHub (<code>git remote add origin</code>)</li>
-            <li>⏳ Pushat till GitHub - <strong>Väntar på autentisering</strong></li>
+            <li>✅ Pushat till GitHub (löst via collaborator-lösning med "lundgren9")</li>
         </ul>
-        
-        <div class="warning">
-            <strong>🔄 Aktuell status: Autentiseringsproblem</strong><br>
-            Git försöker använda kontot "lundgren9" istället för "kentlundgren" för att pusha. 
-            Detta beror på sparade credentials i Windows Credential Manager.
-            <br><br>
-            <strong>Vald lösning:</strong> Lagt till "lundgren9" som collaborator (pending invite) 
-            så att båda kontona kan pusha till repositoryt.
-        </div>
+
+        <h3>✅ Genomförda steg (28 maj 2026) – Återkoppling av lokal mapp till GitHub:</h3>
+        <ul>
+            <li>✅ Diagnostiserat problemet: <code>git status</code> → "fatal: not a git repository"</li>
+            <li>✅ Förstått att man INTE ska klicka "Publish to GitHub" i Cursor (skapar nytt repo)</li>
+            <li>✅ <code>git init -b main</code> – skapade ny .git-mapp med rätt branch-namn</li>
+            <li>✅ <code>git remote add origin ...</code> – kopplat till befintligt GitHub-repo</li>
+            <li>✅ <code>git fetch origin</code> – hämtat remote-historik utan att röra lokala filer</li>
+            <li>✅ <code>git add -A</code> + <code>git commit</code> – committat lokala filer (inkl. uppdaterad index.html med 2026-data)</li>
+            <li>✅ <code>git merge --allow-unrelated-histories -X ours origin/main</code> – sammanfogat historiker, lokala filer vann vid konflikter</li>
+            <li>✅ <code>git push -u origin main</code> – pushat till GitHub utan force-push!</li>
+            <li>✅ GitHub Pages uppdateras automatiskt: <a href="https://kentlundgren.github.io/Bjerred-medlemmar/" target="_blank">kentlundgren.github.io/Bjerred-medlemmar</a></li>
+        </ul>
         
         <div class="info">
             <strong>📌 Specialfall i detta projekt:</strong><br><br>
@@ -744,8 +961,8 @@ D:/
     </div>
 
     <footer style="margin-top: 50px; padding-top: 20px; border-top: 2px solid #ddd; text-align: center; color: #666;">
-        <p>Skapad av Kent Lundgren | 5 januari 2025</p>
-        <p>För projektet: Bjerred Medlemmar</p>
+        <p>Skapad av Kent Lundgren | 5 januari 2025 | Uppdaterad 28 maj 2026</p>
+        <p>För projektet: <a href="https://kentlundgren.github.io/Bjerred-medlemmar/" target="_blank">Bjerred Medlemmar</a></p>
     </footer>
 </body>
 </html>
