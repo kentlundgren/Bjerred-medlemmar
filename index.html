@@ -420,6 +420,50 @@
 
         /* 
         =====================================================================
+        UPPDATERING 2026-05-28: REDIRECT-BANNER
+        Tydlig notis om att primär sida finns på annan URL
+        =====================================================================
+        */
+        .redirect-banner {
+            background: linear-gradient(135deg, #744210, #c05621);
+            color: white;
+            padding: 18px var(--container-padding);
+            text-align: center;
+            border-bottom: 3px solid #ed8936;
+        }
+
+        .redirect-banner p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .redirect-banner strong {
+            font-size: 1.05rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .redirect-banner a {
+            color: #fefcbf;
+            font-weight: bold;
+            text-decoration: underline;
+            font-size: 1rem;
+        }
+
+        .redirect-banner a:hover {
+            color: #ffffff;
+        }
+
+        .redirect-banner .backup-note {
+            margin-top: 8px;
+            font-size: 0.82rem;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        /* 
+        =====================================================================
         MODAL (POPUP)
         Visar teknisk information i en overlay
         =====================================================================
@@ -767,6 +811,33 @@
         <div class="header">
             <h1>📊 Medlemsutveckling</h1>
             <p>Statistik uppdaterad med 2026-data (jan–maj 2026)</p>
+        </div>
+
+        <!-- 
+        =========================================================================
+        UPPDATERING 2026-05-28: REDIRECT-BANNER
+        Hänvisar besökare till den primära sidan.
+        Denna sida (GitHub-repot) används som backup/arkiv.
+        =========================================================================
+        -->
+        <div class="redirect-banner">
+            <p>
+                <strong>⚠️ Observera – denna sida är ett arkiv/backup</strong>
+                Den primära och aktuella sidan för medlemsstatistik finns här:
+            </p>
+            <p>
+                <a href="https://kentlundgren.github.io/foreningar/BjerredsSaltsjobad/medlemmar/" 
+                   target="_blank" rel="noopener">
+                    🔗 kentlundgren.github.io/foreningar/BjerredsSaltsjobad/medlemmar/
+                </a>
+            </p>
+            <p class="backup-note">
+                Du befinner dig just nu på en äldre spegelsida kopplad till GitHub-repot 
+                <a href="https://github.com/kentlundgren/Bjerred-medlemmar" target="_blank" rel="noopener">
+                    github.com/kentlundgren/Bjerred-medlemmar
+                </a> 
+                – den används som backup och versionshistorik.
+            </p>
         </div>
 
         <!-- INLEDNING med beskrivning av verktyget -->
